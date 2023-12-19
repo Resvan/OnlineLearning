@@ -12,8 +12,9 @@ import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setLogout, setMode, } from '../../state';
+import { Button } from '@mui/material';
 
 
 
@@ -51,6 +52,7 @@ const Navbar = () => {
    
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
+    const navigate = useNavigate()
 
 
 
@@ -61,6 +63,9 @@ const Navbar = () => {
                     Online Learning
                 </Typography>
                 <Icons>
+                <Button  onClick={()=>navigate('/admin')}>
+                    Admin
+                </Button>
                     <DarkModeIcon onClick={() => dispatch(setMode())} color='white' />
                     <Avatar sx={{ width: 30, height: 30 }} src={user?.profilePic} onClick={e => setOpen(true)} />
                 </Icons>

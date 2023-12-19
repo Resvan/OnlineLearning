@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid } from '@mui/material';
+import { Button, Container, Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import CourseCard from '../../Components/CourseCard/CourseCard';
+import { useNavigate } from 'react-router-dom';
 
 const AdminHome = () => {
 
     const [courses, setCourses] = useState([]);
     const token = useSelector((state) => state.token);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -32,6 +34,9 @@ const AdminHome = () => {
 
     return (
         <Container sx={{marginTop:"2rem", }}>
+            <Button onClick={()=> navigate('/add-course')}>
+                Add Course
+            </Button>
             <Grid container>
             {courses.map((course, i) => (
                <Grid key={i} item xs={12} md={3}>
