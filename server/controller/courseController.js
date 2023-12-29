@@ -166,7 +166,7 @@ export const updateProgress = async (req, res) => {
             levelId: new ObjectId(levelId),
             attempts: 1,
             score: progress,
-            passed: true,
+            passed: progress > 90 ? true: false,
             timeTaken,
           });
         }
@@ -182,7 +182,7 @@ export const updateProgress = async (req, res) => {
               levelId: levelId,
               attempts: 1,
               timeTaken,
-              score: progress,
+              score: progress > 90 ? true: false,
               passed: true,
             },
           ],
