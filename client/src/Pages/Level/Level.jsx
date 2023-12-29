@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -7,11 +7,11 @@ import {
   CardMedia,
   Container,
   Typography,
-} from '@mui/material';
-import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import QuizQuestion from '../../Components/Quiz/Quizquestion';
+} from "@mui/material";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import QuizQuestion from "../../Components/Quiz/Quizquestion";
 
 const CourseLevel = () => {
   const token = useSelector((state) => state.token);
@@ -24,31 +24,27 @@ const CourseLevel = () => {
 
   const getCourseLevel = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:6001/course/level-details/${id}`, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`,
+      const { data } = await axios.get(
+        `http://localhost:6001/course/level-details/${id}`,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
-      console.log(data);
+      );
+
       setLevel(data);
     } catch (error) {
-      console.error('Error fetching course level:', error);
+      console.error("Error fetching course level:", error);
     }
-  }
+  };
 
   useEffect(() => {
     getCourseLevel();
   }, [id]);
 
   const handleAnswered = ({ correctCount }) => {
-
-
-    // Calculate the time duration
-    const endTime = performance.now();
-    const duration = endTime - startTime;
-    console.log('Time Duration:', duration);
-
     if (correctCount == 1) {
       setQuizResults([...quizResults, correctCount]);
     }
@@ -60,40 +56,54 @@ const CourseLevel = () => {
   };
 
   const handleSubmitAnswers = () => {
-    const progress = (quizResults?.length / level?.assignments?.length) * 100
-    if (progress > 90) {
-      const data = {
-        "levelId": level?._id,
-        'courseId': level?.course,
-        'progress': progress,
-      }
-      axios.post('http://localhost:6001/course/update-progress', data, {
+    // Calculate the time duration
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+    const progress = (quizResults?.length / level?.assignments?.length) * 100;
+    const data = {
+      levelId: level?._id,
+      courseId: level?.course,
+      progress: progress || 0,
+      timeTaken: duration,
+    };
+    axios
+      .post("http://localhost:6001/course/update-progress", data, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
-        }
-      },)
-      navigate(`/course/${level?.course}`);
-    }
-  }
+        },
+      })
+      .then(() => {
+        navigate(`/course/${level?.course}`);
+      });
+  };
 
   return (
     <Container>
-      <Card sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        minHeight: '75vh',
-      }}>
-        <CardMedia component="img" sx={{
-          width: '100%',
-          height: '75%',
-          objectFit: 'cover',
-        }} image={level?.video} alt={level?.title} />
-        <CardContent sx={{
-          textAlign: 'center',
-          marginTop: '1rem',
-        }}>
+      <Card
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          minHeight: "75vh",
+        }}
+      >
+        <CardMedia
+          component="img"
+          sx={{
+            width: "100%",
+            height: "75%",
+            objectFit: "cover",
+          }}
+          image={level?.video}
+          alt={level?.title}
+        />
+        <CardContent
+          sx={{
+            textAlign: "center",
+            marginTop: "1rem",
+          }}
+        >
           <Typography variant="h5" component="div">
             {level?.title}
           </Typography>
@@ -108,7 +118,7 @@ const CourseLevel = () => {
         </Box>
       )}
       {start && (
-        <Box sx={{ marginTop: '1rem' }}>
+        <Box sx={{ marginTop: "1rem" }}>
           {level?.assignments?.map((question, indx) => (
             <QuizQuestion
               key={indx}

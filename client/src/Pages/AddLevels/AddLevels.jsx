@@ -28,7 +28,7 @@ const AddLevels = () => {
     const [levels, setLevels] = useState([]);
 
 
-    const handleFormSubmit = (values, { setSubmitting }) => {
+    const handleFormSubmit = (values, { setSubmitting, resetForm  }) => {
         console.log(values);
         setSubmitting(true);
         values.course = _id;
@@ -40,6 +40,7 @@ const AddLevels = () => {
                 },
             })
             .then((response) => {
+                resetForm();
                 setLevels(response.data);
             })
             .catch((err) => {

@@ -20,6 +20,7 @@ const EnrolledList = () => {
             }
         }
     );
+    console.log(response.data);
         setEnrolledUsers(response.data);
       } catch (error) {
         console.error('Error fetching enrolled users:', error);

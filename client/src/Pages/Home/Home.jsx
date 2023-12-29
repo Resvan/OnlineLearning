@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
+import {toast, Toaster} from 'react-hot-toast';
 import { setUser } from '../../state';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,6 +50,8 @@ const Home = () => {
                 }
             );
 
+            console.log(data);
+
             dispatch(setUser({ user: data }));
 
             toast.success('Successfully enrolled');
@@ -84,7 +86,7 @@ const Home = () => {
                         </CardContent>
                         <CardActions>
                             {
-                                user?.courses?.includes(course._id) ?
+                                !user?.courses?.includes(course._id) ?
                                     <Button onClick={() => {
                                         handleEnroll(course._id);
                                     }} size="small">Enroll</Button> :
@@ -96,7 +98,7 @@ const Home = () => {
                     </Card>
                 )
             }
-
+            <Toaster/>
 
         </Box>
 

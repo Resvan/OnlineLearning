@@ -12,6 +12,7 @@ import EnrolledList from "./Pages/EnrolledList/EnrolledList";
 import CourseCard from "./Pages/Course/Course";
 import CourseDetails from "./Pages/Course/Course";
 import CourseLevel from "./Pages/Level/Level";
+import LeadersBoard from "./Pages/LeadersBoard/LeadersBoard";
 
 function App() {
   const currentUser = useSelector((state) => Boolean(state.token));
@@ -64,6 +65,7 @@ function App() {
         <Route path="/admin/:id" element={<EnrolledList />} />
         <Route path="/course/:id" element={<CourseDetails />} />
         <Route path="/level/:id" element={<CourseLevel />} />
+        <Route path="/leaders-board/:id" element={<LeadersBoard />} />
        
       </Route>
       <Route
